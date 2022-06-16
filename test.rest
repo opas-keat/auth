@@ -1,0 +1,386 @@
+
+@hostname = 127.0.0.1
+@port = 8080
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@apiname = api
+@apiversion = v1
+
+### check api started
+GET http://{{host}}/{{apiname}}/{{apiversion}} HTTP/1.1
+
+### login User
+# @name login
+POST http://{{host}}/{{apiname}}/{{apiversion}}/auth/login
+content-type: {{contentType}}
+
+{
+    "userName": "admin",
+    "userPass": "P@ssw0rd"
+}
+
+@token = {{login.response.body.token}}
+
+### create user
+POST http://{{host}}/{{apiname}}/{{apiversion}}/users 
+content-type: {{contentType}}
+Authorization: Bearer {{token}}
+
+{
+    "userName": "tester",
+    "userPass": "P@ssw0rd",
+    "userType": "2",
+    "userStatus": "1",
+    "code": "ทดสอบ code",
+    "firstName": "ทดสอบ firstName",
+    "lastName": "ทดสอบ lastName",
+    "idCard": "0000000000000",
+    "province": "กรุงเทพมหานคร",
+    "amphure": "",
+    "district": ""
+}
+
+### get User
+GET http://{{host}}/{{apiname}}/{{apiversion}}/users
+Authorization: Bearer {{token}}
+
+### get User by id
+GET http://{{host}}/{{apiname}}/{{apiversion}}/users/7
+Authorization: Bearer {{token}}
+
+### update User
+PUT http://{{host}}/{{apiname}}/{{apiversion}}/users 
+content-type: application/json
+
+{
+    "ID":2,
+    "firstName": "ทดสอบ แก้ไข firstName",
+    "lastName": "ทดสอบ แก้ไข lastName",
+    "idCard": "0000000000001",
+    "province": "กรุงเทพ",
+    "amphure": "",
+    "district": ""
+}
+
+### delete User
+DELETE  http://{{host}}/{{apiname}}/{{apiversion}}/users 
+content-type: application/json
+
+{
+    "ID":2
+}
+
+### list User
+GET http://{{host}}/{{apiname}}/{{apiversion}}/users/search?province=กรุงเทพมหานคร
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### create Info
+POST http://{{host}}/{{apiname}}/{{apiversion}}/info 
+content-type: application/json
+
+{
+    "id": 0,
+    "ectName": "ทดสอบ2",
+    "ectTotalComiss": 0,
+    "ectProcess": "ดี",
+    "province": "กรุงเทพ",
+    "amphure": "บางขุนเทียน",
+    "district": "แสมดำ",
+    "location": "10/10"
+}
+
+### get Info
+GET http://{{host}}/{{apiname}}/{{apiversion}}/info/1
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### update Info
+PUT http://{{host}}/{{apiname}}/{{apiversion}}/info 
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "ID":1,
+    "EctName": "ศูนย์ กรุงเทพ2",
+    "EctTotalComiss": 12,
+    "EctProcess": "ทดสอบ2",
+    "Province": "กรุงเทพ",
+    "Amphure": "บางขุนเทียน",
+    "District": "แสมดำ"
+}
+
+### delete Info
+DELETE  http://{{host}}/{{apiname}}/{{apiversion}}/info 
+content-type: application/json
+
+{
+    "ID":1
+}
+
+### list Info
+GET http://{{host}}/{{apiname}}/{{apiversion}}/info
+?offset=1
+&limit=10
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### checkdup
+POST http://{{host}}/{{apiname}}/{{apiversion}}/info/checkdup
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "id": 0,
+    "ectName": "ศูนย์ส่งเสริมพัฒนาประชาธิปไตยตำบลนาแว",
+    "ectTotalComiss": 0,
+    "ectProcess": "ดี",
+    "province": "นครศรีธรรมราช",
+    "amphure": "ฉวาง",
+    "district": "นาแว",
+    "location": "นาแว"
+}
+
+### total Info
+GET http://{{host}}/{{apiname}}/{{apiversion}}/info/total
+?province=กรุงเทพมหานคร
+&amphure=เขตคันนายาว
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### update comiss total
+PUT http://{{host}}/{{apiname}}/{{apiversion}}/info/45/commisstotal
+
+### create CommissInfo
+POST http://{{host}}/{{apiname}}/{{apiversion}}/commiss_info 
+content-type: application/json
+
+{
+    "id":0,
+    "commissPreName": "commissPreName",
+    "commissFirstName": "commissFirstName",
+    "commissSurName": "commissSurName",
+    "commissDate": "01/01/2564",
+    "commissPosition": "commissPosition",
+    "commissPositionCommu": "commissPositionCommu,commissPositionCommu",
+    "commissIDCard": "1234567890123",
+    "commissBirthYear": "2564",
+    "commissTelephone": "00000000",
+    "commissLine": "line",
+    "commissFacebook": "face",
+    "commissExp": "aa,bb",
+    "infoName":"infoName",
+    "commissLocation": "commissLocation",
+    "province":"province"
+}
+### get CommissInfo
+GET http://{{host}}/{{apiname}}/{{apiversion}}/commiss_info/1
+
+
+### update CommissInfo
+### delete CommissInfo
+### list CommissInfo
+GET http://{{host}}/{{apiname}}/{{apiversion}}/commiss_info
+?offset=1
+&limit=10
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### checkdup
+POST http://{{host}}/{{apiname}}/{{apiversion}}/commiss_info/checkdup
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "id":0,
+    "commissPreName": "",
+    "commissFirstName": "บุญส่ง",
+    "commissSurName": "อาทร",
+    "commissDate": "",
+    "commissPosition": "",
+    "commissPositionCommu": "",
+    "commissIDCard": "",
+    "commissBirthYear": "",
+    "commissTelephone": "",
+    "commissLine": "",
+    "commissFacebook": "",
+    "commissExp": "",
+    "infoName":"ศูนย์ส่งเสริมพัฒนา ประชาธิปไตยและการเลือกตั้ง ตำบลหนองเต่า2",
+    "commissLocation": "",
+    "province":""
+}
+
+### create EctVillageHosty
+POST http://{{host}}/{{apiname}}/{{apiversion}}/village_hosty 
+content-type: application/json
+
+{
+    "villageHostyName": "ทดสอบ",
+    "villageHostyNo": "1/1",
+    "villageHostyTotal": 1,
+    "villageHostyTotalUsed": 1,
+    "villageHostyActivity": "ectVillageHostyActivity",
+    "villageHostyActYr": "ectVillageHostyActYr",
+    "villageHostyGoalAct": 1,
+    "villageHostyTypeAct": "ectVillageHostyTypeAct",
+    "province": "กรุงเทพ",
+    "amphure": "บางขุนเทียน",
+    "district": "แสมดำ"
+}
+
+### get EctVillageHosty
+### update EctVillageHosty
+### delete EctVillageHosty
+### list EctVillageHosty
+
+### checkdup villageHosty
+POST http://{{host}}/{{apiname}}/{{apiversion}}/village_hosty/checkdup
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "villageHostyName": "บ้านท่าข้าม",
+    "villageHostyNo": "",
+    "villageHostyTotal": -1,
+    "villageHostyTotalUsed": -1,
+    "villageHostyActivity": "",
+    "villageHostyActYr": "",
+    "villageHostyGoalAct": -1,
+    "villageHostyTypeAct": "",
+    "province": "ชลบุรี",
+    "amphure": "พนัสนิคม",
+    "district": "ท่าข้าม"
+}
+
+### list EctVillageHostyElection
+GET http://{{host}}/{{apiname}}/{{apiversion}}/village_hosty_election
+
+
+GET http://{{host}}/{{apiname}}/{{apiversion}}/ect_village_hosty
+# ?ectVillageHostyName=กรุงเทพ
+# &pageSize=10
+
+### create EctLectuterInfo
+POST http://{{host}}/{{apiname}}/{{apiversion}}/ect_lectuter_info 
+content-type: application/json
+
+{
+    "ectLectuterPreName": "ทดสอบ",
+    "ectLectuterFirstName": "1/1",
+    "ectLectuterSurName": "ทดสอบ",
+    "ectLectuterAgency": "1",
+    "ectLectuterCourseNm": "1",
+    "ectLectuterCourseYr": "1",
+    "ectLectuterTelePhone": "11",
+    "ectLectuterLine": "line",
+    "ectLectuterFacebook": "face",
+    "ectLectuterExp": "1"
+}
+### get EctLectuterInfo
+### update EctLectuterInfo
+### delete EctLectuterInfo
+### list EctLectuterInfo
+GET http://{{host}}/{{apiname}}/{{apiversion}}/ect_lectuter_info
+# ?ectLectuterFirstName=กรุงเทพ
+# &pageSize=10
+
+
+### init EctCommissPosition
+GET http://{{host}}/{{apiname}}/{{apiversion}}/ect_commiss_position/init
+
+### list EctCommissPosition
+GET http://{{host}}/{{apiname}}/{{apiversion}}/ect_commiss_position
+
+### init EctCommissPositionCommu
+GET http://{{host}}/{{apiname}}/{{apiversion}}/ect_commiss_position_commu/init
+
+### list EctCommissPositionCommu
+GET http://{{host}}/{{apiname}}/{{apiversion}}/ect_commiss_position_commu
+
+### init EctCommissExp
+GET http://{{host}}/{{apiname}}/{{apiversion}}/ect_commiss_exp/init
+
+### list EctCommissExp
+GET http://{{host}}/{{apiname}}/{{apiversion}}/ect_commiss_exp
+
+### init EctVillageHostyTypeAct
+GET http://{{host}}/{{apiname}}/{{apiversion}}/ect_village_hosty_type_act/init
+
+### list EctVillageHostyTypeAct
+GET http://{{host}}/{{apiname}}/{{apiversion}}/ect_village_hosty_type_act
+
+### create FileAttach
+POST http://{{host}}/{{apiname}}/{{apiversion}}/file_attach
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="text"
+
+title
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="document"; filename="1.png"
+Content-Type: image/png
+
+< ./temp/1.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+{
+    "fileName": "01.png",
+        "fileType": ".png",
+        "fileSize": 1,
+        "module":"info",
+        "linkType": "profiles",
+        "linkId": 0,
+}
+
+### get Profile By LinkId
+GET http://{{host}}/{{apiname}}/{{apiversion}}/file_attach/module/info/profile/59
+
+### list FileAttach By LinkType, LinkId
+GET http://{{host}}/{{apiname}}/{{apiversion}}/file_attach/module/info/link_type/attachs/link_id/59
+
+
+### delete file attach By fileId
+DELETE http://{{host}}/{{apiname}}/{{apiversion}}/file_attach/60
+
+### mainInfo init 
+POST http://{{host}}/{{apiname}}/{{apiversion}}/main_info/init
+content-type: application/json
+
+### mainInfo list
+GET http://{{host}}/{{apiname}}/{{apiversion}}/main_info?mainInfoName=
+content-type: application/json
+Authorization: Bearer {{token}}
+
+### mainInfo update suminfo
+PUT http://{{host}}/{{apiname}}/{{apiversion}}/main_info/suminfo
+content-type: application/json
+
+{
+    "province": "กรุงเทพมหานคร",
+    "infosum": 0
+}
+
+### mainInfo update suminfo
+PUT http://{{host}}/{{apiname}}/{{apiversion}}/main_info/sumcommiss
+content-type: application/json
+
+{
+    "province": "กรุงเทพมหานคร",
+    "commissSum": 1
+}
+
+### mainInfo update suminfo
+PUT http://{{host}}/{{apiname}}/{{apiversion}}/main_info/sumvillagehosty
+content-type: application/json
+
+{
+    "province": "กรุงเทพมหานคร",
+    "villageHostySum": 1
+}
+
+### get Log
+GET http://{{host}}/{{apiname}}/{{apiversion}}/logs
+Authorization: Bearer {{token}}
+
+
+
