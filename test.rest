@@ -18,7 +18,7 @@ content-type: {{contentType}}
     "userName": "admin",
     "userPass": "P@ssw0rd"
 }
-
+###
 @token = {{login.response.body.token}}
 
 ### create user
