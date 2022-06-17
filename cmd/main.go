@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"os/signal"
 
@@ -25,16 +26,22 @@ func main() {
 	// // 	SigningKey: []byte("omsoft"),
 	// // }))
 
-	// // db, err := database.New(&database.DatabaseConfig{
-	// // 	Driver:   config.GetString("DB_DRIVER"),
-	// // 	Host:     config.GetString("DB_HOST"),
-	// // 	Username: config.GetString("DB_USERNAME"),
-	// // 	Password: config.GetString("DB_PASSWORD"),
-	// // 	Port:     config.GetInt("DB_PORT"),
-	// // 	Database: config.GetString("DB_DATABASE"),
-	// // })
-
 	config := configuration.New()
+
+	db, err := database.New(&database.DatabaseConfig{
+		Driver:   config.GetString("DB_DRIVER"),
+		Host:     config.GetString("DB_HOST"),
+		Username: config.GetString("DB_USERNAME"),
+		Password: config.GetString("DB_PASSWORD"),
+		Port:     config.GetInt("DB_PORT"),
+		Database: config.GetString("DB_DATABASE"),
+	})
+	if err != nil {
+		fmt.Println("failed to connect to database:", err.Error())
+		if db == nil {
+			fmt.Println("failed to connect to database: db variable is nil")
+		}
+	}
 
 	app := App{
 		App: fiber.New(*config.GetFiberConfig()),
@@ -60,8 +67,7 @@ func main() {
 		<-c
 		app.exit()
 	}()
-	// Start listening on the specified address
-	err := app.Listen(config.GetString("APP_ADDR"))
+	err = app.Listen(config.GetString("APP_ADDR"))
 	if err != nil {
 		app.exit()
 	}
