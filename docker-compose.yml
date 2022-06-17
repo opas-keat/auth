@@ -1,0 +1,67 @@
+version: "3.7"
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  pgadmin:
+
+services:
+  db:
+    image: postgres:14.2
+    restart: always
+    command: postgres -c 'max_connections=300' -c 'shared_buffers=1GB'
+    env_file:
+      - database.env
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - postgres
+
+  pgadmin:
+    image: dpage/pgadmin4:6.8
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: P@ssw0rd
+      PGADMIN_LISTEN_PORT: 5050
+    ports:
+      - "5050:5050"
+    networks:
+      - postgres
+    volumes:
+      - ./pgadmin:/root/.pgadmin
+
+  # addressapi:
+  #   image: opas/addressapi:v6
+  #   restart: always
+  #   depends_on:
+  #     - db
+  #   ports:
+  #     - "3000"
+  #   deploy:
+  #     replicas: 1
+  #   networks:
+  #     - ect
+
+  # nginx container
+  # web:
+  #   # specifies the latest nginx image
+  #   image: nginx:latest
+  #   # Connects the conf file of the container to the conf file in our folder
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #   # It will start up the nginx only when all api containers have started
+  #   depends_on:
+  #     - addressapi
+  #   # Connects the port 80 of the nginx container to localhost:80 or localhost
+  #   ports:
+  #     - "80:80"
+  #   networks:
+  #     - ect
