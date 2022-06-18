@@ -2,7 +2,7 @@
 @hostname = 127.0.0.1
 @port = 8080
 @host = {{hostname}}:{{port}}
-@contentType = application/json
+@contentType = application/json charset=utf-8
 @apiname = api
 @apiversion = v1
 
@@ -12,14 +12,24 @@ GET http://{{host}}/{{apiname}}/{{apiversion}} HTTP/1.1
 ### login User
 # @name login
 POST http://{{host}}/{{apiname}}/{{apiversion}}/auth/login
+accept:{{contentType}}
 content-type: {{contentType}}
 
 {
-    "userName": "admin",
+    "userName": "ad",
     "userPass": "P@ssw0rd"
 }
+
 ###
-@token = {{login.response.body.token}}
+@token = {{login.response.body.$.data.token.access_token}}
+
+### get profile1
+GET http://{{host}}/{{apiname}}/{{apiversion}}/user/profile1
+# Authorization: Bearer {{token}}
+
+### get profile2
+GET http://{{host}}/{{apiname}}/{{apiversion}}/user/profile2
+Authorization: Bearer {{token}}
 
 ### create user
 POST http://{{host}}/{{apiname}}/{{apiversion}}/users 

@@ -60,7 +60,7 @@ func main() {
 		TimeZone:   "Asia/Bangkok",
 	}))
 
-	routes.SetupRoutes(app.App)
+	routes.SetupRoutes(app.App, db)
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 	go func() {

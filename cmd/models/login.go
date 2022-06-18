@@ -2,8 +2,8 @@ package models
 
 type (
 	Login struct {
-		Username string `json:"userName"`
-		Password string `json:"userPass"`
+		Username string `json:"userName" xml:"userName" form:"userName"`
+		Password string `json:"userPass" xml:"userPass" form:"userPass"`
 	}
 	Token struct {
 		AccessToken  string `json:"access_token"`
@@ -26,3 +26,4 @@ type (
 		Token string `json:"refresh_token" form:"refresh_token"`
 	}
 )
+

@@ -5,10 +5,19 @@ go 1.18
 require github.com/spf13/viper v1.12.0
 
 require (
+	github.com/go-playground/locales v0.14.0 // indirect
+	github.com/go-playground/universal-translator v0.18.0 // indirect
+	github.com/leodido/go-urn v1.2.1 // indirect
+)
+
+require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
+	github.com/go-playground/validator/v10 v10.11.0
 	github.com/goccy/go-json v0.9.7
 	github.com/gofiber/fiber/v2 v2.34.1
+	github.com/gofiber/jwt/v3 v3.2.12
+	github.com/golang-jwt/jwt/v4 v4.4.1
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.12.1 // indirect

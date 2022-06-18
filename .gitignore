@@ -21,3 +21,5 @@
 /temp
 /uploads
 /target
+
+.env # ignore local environment variable file
