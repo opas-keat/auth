@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/opas/Projects/github.com/opas-keat/auth'
+echo "Hello"
+make: Leaving directory `/Users/opas/Projects/github.com/opas-keat/auth'
+ 

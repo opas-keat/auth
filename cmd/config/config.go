@@ -17,6 +17,12 @@ type Config struct {
 	fiber        *fiber.Config
 }
 
+
+var (
+	KEY = "4244467890218023942835864651981516513207895156132164643213169699"
+	// passphrase    = "AAACCCDDDYYUURRS"
+)
+
 var defaultErrorHandler = func(c *fiber.Ctx, err error) error {
 	// Status code defaults to 500
 	code := fiber.StatusInternalServerError

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	// "context"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -143,6 +144,34 @@ func createToken(uid string, user string, fullName string, roles []string) (*Msg
 		return tokenDetail, err
 	}
 	return tokenDetail, nil
+}
+
+// func FetchAuth(accessUUid string) (string, error) {
+// 	var ctx = context.Background()
+// 	uid, err := rdConn.Get(ctx, accessUUid).Result()
+// 	if err != nil {
+// 		return "", err
+// 	}
+// 	return uid, nil
+// }
+
+func Profile(c *fiber.Ctx) error {
+	user := c.Locals("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	accessUUid := claims["access_uuid"].(string)
+	// context := claims["context"]
+	// uid, err := FetchAuth(accessUUid)
+	println(user)
+	println(accessUUid)
+	// if err != nil {
+	// 	return util.FailOnError(c, err, "StatusForbidden", fiber.StatusForbidden, t)
+	// 	return failOnError(c, err, "StatusUnauthorized", fiber.StatusUnauthorized)
+	// }
+	// c.Status(fiber.StatusOK).JSON(fiber.Map{
+	// 	"sub":     uid,
+	// 	"context": context,
+	// })
+	return nil
 }
 
 func AuthorizationRequired() fiber.Handler {
